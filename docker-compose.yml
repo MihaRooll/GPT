@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  nginx-rtmp:
+    image: alfg/nginx-rtmp
+    ports:
+      - "1935:1935"
+    profiles: ["rtmp"]
